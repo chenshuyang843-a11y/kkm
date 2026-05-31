@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品集 - 陈舒阳</title>
+  <meta name="description" content="陈舒阳的作品集：UX设计项目、游戏作品集&经历与更多创作">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">🌸 陈舒阳</a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="about.html">关于我</a></li>
+      <li><a href="experience.html">经历</a></li>
+      <li><a href="portfolio.html" class="active">作品集</a></li>
+      <li><a href="life.html">课余生活</a></li>
+      <li><a href="chat.html">AI 聊天</a></li>
+      <li><a href="games.html">小游戏</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h2>作品集</h2>
+    <p class="subtitle">认真做过的每一件事</p>
+  </section>
+
+  <div class="portfolio-tabs">
+    <button class="tab-btn active" onclick="switchTab('ux')">🎨 UX作品集</button>
+    <button class="tab-btn" onclick="switchTab('gaming')">🎮 游戏作品集&经历</button>
+    <button class="tab-btn" onclick="switchTab('other')">✨ 其他方向</button>
+  </div>
+
+  <!-- ==================== Tab 1：UX作品集 ==================== -->
+  <div class="tab-content active" id="tab-ux">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-item" onclick="openModal('bilibili')">
+        <div class="item-img img-placeholder">📺</div>
+        <div class="item-info">
+          <h4>Bilibili 用户成长体系优化</h4>
+          <p>构建全新等级勋章体系，设计签到弹窗与悬浮入口，打造"触达—激励—反馈"闭环体验。</p>
+          <span class="item-tag">交互设计</span>
+          <span class="item-tag">IP延展</span>
+          <span class="item-tag">2025</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openModal('nike')">
+        <div class="item-img img-placeholder">👟</div>
+        <div class="item-info">
+          <h4>耐克年货节视觉运营活动</h4>
+          <p>主导活动视觉设计，运用AI工具快速生成IP形象与3D组件，沉淀标准化提示词公式。</p>
+          <span class="item-tag">AIGC</span>
+          <span class="item-tag">UI设计</span>
+          <span class="item-tag">2026</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 下滑引导 -->
+    <div style="text-align:center;padding:18px 0 6px;">
+      <span style="display:inline-block;padding:8px 28px;background:linear-gradient(135deg,var(--pink-light),#fce4ea);color:var(--pink);border-radius:20px;font-size:0.9rem;animation:msgIn 0.6s ease;">👇 下面还有完整设计页面哟～</span>
+    </div>
+
+    <!-- Bilibili + Nike 完整作品集页面 -->
+    <div class="portfolio-gallery">
+      <h4>📖 Bilibili 用户成长体系 — 完整设计页面</h4>
+      <div class="gallery-grid" id="gallery-bilibili"></div>
+    </div>
+    <div class="portfolio-gallery">
+      <h4>👟 耐克年货节 — 完整设计页面</h4>
+      <div class="gallery-grid" id="gallery-nike"></div>
+    </div>
+  </div>
+
+  <!-- ==================== Tab 2：游戏作品集&经历 ==================== -->
+  <div class="tab-content" id="tab-gaming">
+
+    <!-- 1. 和平精英完整设计页面（作品集画廊） -->
+    <div class="portfolio-gallery" style="margin-top:0;padding-top:0;border-top:none;">
+      <h4>🎯 和平精英 · 操作体验优化 — 完整设计页面</h4>
+      <div class="gallery-grid" id="gallery-peace"></div>
+    </div>
+
+    <!-- 2. 游戏经历 -->
+    <div class="insight-section" style="margin-top:20px;">
+      <h3>🎮 游戏经历</h3>
+      <p class="gaming-intro" style="margin-bottom:20px;">
+        作为多款游戏的深度玩家，我相信理解游戏才能设计好游戏——这也是我热爱游戏UX的原因。
+      </p>
+    </div>
+
+    <div class="filter-tags" id="game-filters">
+      <button class="filter-tag active" onclick="filterGames('all', this)">全部</button>
+      <button class="filter-tag" onclick="filterGames('fps', this)">FPS / TPS</button>
+      <button class="filter-tag" onclick="filterGames('openworld', this)">开放世界</button>
+      <button class="filter-tag" onclick="filterGames('moba', this)">MOBA</button>
+      <button class="filter-tag" onclick="filterGames('asym', this)">非对称竞技</button>
+      <button class="filter-tag" onclick="filterGames('roguelike', this)">Roguelike</button>
+      <button class="filter-tag" onclick="filterGames('casual', this)">休闲</button>
+    </div>
+
+    <div class="game-grid">
+      <div class="game-card" data-category="fps">
+        <div class="game-cover img-placeholder">🔫</div>
+        <div class="game-info">
+          <h4>和平精英</h4>
+          <div class="game-meta"><span>📱 手游</span><span>⏱️ 2500+小时</span><span>💰 氪金约1.5w</span></div>
+          <p class="game-desc">开服玩家至今，多赛季王牌段位。深度了解跳伞逻辑、身法技巧、枪械数值、圈型运营。频繁体验地铁逃生，对复杂经济体系的游戏内UI有一定研究。拥有3个载具皮肤、10+升级枪皮肤、30+把枪皮，千金淑猫等角色皮全套皮肤。</p>
+          <div class="game-tags"><span class="game-tag">FPS</span><span class="game-tag">战术竞技</span><span class="game-tag">王牌段位</span></div>
+        </div>
+      </div>
+
+      <div class="game-card" data-category="openworld">
+        <div class="game-cover img-placeholder">🌿</div>
+        <div class="game-info">
+          <h4>原神</h4>
+          <div class="game-meta"><span>📱 多平台</span><span>⏱️ 5000+小时</span><span>💰 氪金约2.7w</span></div>
+          <p class="game-desc">开服玩家至今，五星角色37个，4.6前女角色全图鉴。蒙德、枫丹等区域探索度100%，成就数1137。精通配队、元素反应及开放大世界交互逻辑，深渊长期12层无压满星通关，具备极强的战斗数值规划与角色练度管理能力。23、24年大月卡全勤。</p>
+          <div class="game-tags"><span class="game-tag">开放世界</span><span class="game-tag">RPG</span><span class="game-tag">满星深渊</span></div>
+        </div>
+      </div>
+
+      <div class="game-card" data-category="moba">
+        <div class="game-cover img-placeholder">⚔️</div>
+        <div class="game-info">
+          <h4>王者荣耀</h4>
+          <div class="game-meta"><span>📱 手游</span><span>⏱️ 1000+小时</span><span>💰 氪金约3000</span></div>
+          <p class="game-desc">擅长发育路射手位，福州市第74李元芳，另有诸葛亮、赵云等区标6个。深刻理解玩家对数值能力的重视与"可视化荣誉"的追求心理。研究过局内特效、Loading界面、对话框等设计。拥有不知火舞·花合斗、小乔·时之魔女两款无双皮肤，10余款传说皮肤和20余款史诗皮肤。</p>
+          <div class="game-tags"><span class="game-tag">MOBA</span><span class="game-tag">市标李元芳</span><span class="game-tag">6区标</span></div>
+        </div>
+      </div>
+
+      <div class="game-card" data-category="asym">
+        <div class="game-cover img-placeholder">🕯️</div>
+        <div class="game-info">
+          <h4>第五人格</h4>
+          <div class="game-meta"><span>📱 多平台</span><span>⏱️ 800+小时</span><span>💰 氪金约4000</span></div>
+          <p class="game-desc">目前段位四阶一。熟悉圣心医院，惯用二楼下跳打法和三板一窗无敌废墟拖节奏。熟悉破窗加速、搏命挣扎、压机等人等操作。常玩大副、木偶、医生等主救/辅救位，观看过2次线下比赛。拥有4个金皮、20余个紫皮。</p>
+          <div class="game-tags"><span class="game-tag">非对称竞技</span><span class="game-tag">四阶一</span><span class="game-tag">主救/辅救位</span></div>
+        </div>
+      </div>
+
+      <div class="game-card" data-category="roguelike">
+        <div class="game-cover img-placeholder">⚡</div>
+        <div class="game-info">
+          <h4>元气骑士</h4>
+          <div class="game-meta"><span>📱 手游</span><span>⏱️ 300+小时</span><span>💰 约40元</span></div>
+          <p class="game-desc">常用游侠、炼金术士、吸血鬼，联机玩牧师辅助队友。已解锁吊炸天模式并多次通关，解锁200+把武器。善用聚爆、光剑、彩虹小白马，曾合成光剑土豪金、雷剑、魔法弓等高阶武器。对2D横板设计和Roguelike随机性游戏UI有一定研究。</p>
+          <div class="game-tags"><span class="game-tag">Roguelike</span><span class="game-tag">2D横板</span><span class="game-tag">吊炸天通关</span></div>
+        </div>
+      </div>
+
+      <div class="game-card" data-category="casual">
+        <div class="game-cover img-placeholder">🥚</div>
+        <div class="game-info">
+          <h4>蛋仔派对</h4>
+          <div class="game-meta"><span>📱 手游</span><span>⏱️ 200小时</span><span>💰 氪金约90</span></div>
+          <p class="game-desc">轻度游玩，主要为观察商业化产品设计。巅峰派对达鸡蛋段位，熟悉翻滚楼梯、岩浆蔓延等竞速关卡的道具刷新点及跳跃惯性节奏。体验过乐园游廊长跑酷及观赏图，收藏4张玩家自制地图，拥有4款派对手册皮肤。</p>
+          <div class="game-tags"><span class="game-tag">休闲</span><span class="game-tag">派对竞技</span><span class="game-tag">商业化观察</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 游戏UX项目 & 洞察 -->
+    <div class="insight-section">
+      <h3>📝 游戏UX项目 & 洞察</h3>
+
+      <div class="insight-card" style="margin-bottom:18px;border-left:4px solid var(--pink);">
+        <h4>🎯 和平精英 · 操作体验优化设计（作品集项目）</h4>
+        <p style="margin-bottom:8px;color:var(--text-muted);font-size:0.8rem;">TPS射击手游 | 用户研究 · 交互优化 · 打卡体验</p>
+        <p><strong>项目背景：</strong>和平精英2019年上线，以TPS第三人称射击为核心，采用外观驱动型付费模式。作为技术一般但热爱记录游戏回忆的手机/平板双端女玩家，发现刚落地阶段的战斗操作与打卡体验存在可优化点。</p>
+        <p><strong>用户分析：</strong>男女比例52:48趋于均衡，超77%玩家在35岁以下，约50%为18-26岁年轻群体，注重获得感、认同感、成就感。</p>
+        <p><strong>竞品分析：</strong>第五人格的拍摄模式屏蔽UI沉浸感强、原神的观测点路线指引降低寻找难度——均作为设计参考。</p>
+        <p><strong>设计方案（6大痛点）：</strong>① 落地黄金时间增设场景标签，通过羊群效应减少决策浪费 ② 偏好配件紫色高亮提示 ③ 优化操作热区布局 ④ 打卡点增加路线指引与标识 ⑤ 拍摄模式屏蔽UI沉浸打卡 ⑥ 增设优先拾取设置。</p>
+        <p><strong>设计价值：</strong>从女玩家视角出发，通过降低操作门槛和优化打卡分享体验，提升玩家获得感与成就感，促进留存与转化。</p>
+      </div>
+
+      <div class="insight-cards">
+        <div class="insight-card">
+          <h4>《和平精英》夏日海豚岛 — 活动UI中的沉浸感营造</h4>
+          <p>在光子创造营期间深入研究了夏日海豚岛主题活动：通过地图场景与UI界面的统一视觉语言、动态天气系统与交互反馈的配合，实现从"大厅—活动入口—游戏场景"的无缝沉浸体验。</p>
+        </div>
+        <div class="insight-card">
+          <h4>《原神》深境螺旋 — 高难内容对玩家行为的影响</h4>
+          <p>作为长期12层满星通关玩家，观察到深渊机制如何通过"角色练度验证—阵容搭配策略—时间压力"三层设计驱动玩家持续投入养成。这种梯度挑战设计对游戏化产品的等级体系搭建有启发意义。</p>
+        </div>
+        <div class="insight-card">
+          <h4>《第五人格》拍摄模式 — 皮肤获得感与分享体验</h4>
+          <p>竞品调研中发现第五人格拍摄模式下可屏蔽所有UI按钮，支持贴脸拍摄细节展示，并设有专用通用动作——这种"为分享而设计"的思路提升了皮肤获得感和玩家自发传播意愿。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== Tab 3：其他方向作品 ==================== -->
+  <div class="tab-content" id="tab-other">
+    <div class="filter-tags" id="other-filters">
+      <button class="filter-tag active" onclick="filterOther('all', this)">全部</button>
+      <button class="filter-tag" onclick="filterOther('photo', this)">📷 摄影</button>
+      <button class="filter-tag" onclick="filterOther('writing', this)">✍️ 写作</button>
+      <button class="filter-tag" onclick="filterOther('illust', this)">🖌️ 插画</button>
+      <button class="filter-tag" onclick="filterOther('video', this)">🎬 视频</button>
+    </div>
+
+    <div class="portfolio-grid" id="other-grid">
+      <div class="portfolio-item" data-category="photo">
+        <div class="item-img img-placeholder">📷</div>
+        <div class="item-info">
+          <h4>城市街拍系列</h4>
+          <p>用镜头记录城市角落里的光影与色彩。</p>
+          <span class="item-tag">摄影</span>
+          <span class="item-tag">2025</span>
+        </div>
+      </div>
+      <div class="portfolio-item" data-category="writing">
+        <div class="item-img img-placeholder">✍️</div>
+        <div class="item-info">
+          <h4>设计思考随笔</h4>
+          <p>关于日常生活里好设计与坏设计的观察笔记。</p>
+          <span class="item-tag">写作</span>
+          <span class="item-tag">2024</span>
+        </div>
+      </div>
+      <div class="portfolio-item" data-category="illust">
+        <div class="item-img img-placeholder">🖌️</div>
+        <div class="item-info">
+          <h4>日常插画练习</h4>
+          <p>扁平风格人物插画，记录朋友们的日常瞬间。</p>
+          <span class="item-tag">插画</span>
+          <span class="item-tag">2024</span>
+        </div>
+      </div>
+      <div class="portfolio-item" data-category="video">
+        <div class="item-img img-placeholder">🎬</div>
+        <div class="item-info">
+          <h4>校园生活Vlog</h4>
+          <p>用视频记录大学生活的点滴，剪辑与叙事练习。</p>
+          <span class="item-tag">视频</span>
+          <span class="item-tag">2024</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 其他作品完整页面 -->
+    <div class="portfolio-gallery">
+      <h4>🎨 封面 & 其他设计作品</h4>
+      <div class="gallery-grid" id="gallery-other"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 图片灯箱 ==================== -->
+  <div class="img-lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lb-close" onclick="closeLightbox()">&times;</button>
+    <button class="lb-nav lb-prev" onclick="event.stopPropagation();navLightbox(-1)">◀</button>
+    <img id="lightbox-img" src="" alt="作品集页面">
+    <button class="lb-nav lb-next" onclick="event.stopPropagation();navLightbox(1)">▶</button>
+    <span class="lb-counter" id="lb-counter"></span>
+  </div>
+
+  <!-- ==================== 弹窗 ==================== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 陈舒阳 · 用心记录生活</p>
+  </footer>
+
+  <script>
+    /* ===== 作品集页面画廊 ===== */
+    const PORTFOLIO_PATH = 'images/portfolio/';
+
+    // 各项目对应PDF页码
+    const galleries = {
+      bilibili: { el: 'gallery-bilibili', pages: range(4, 47) },
+      nike:     { el: 'gallery-nike',     pages: range(48, 64) },
+      peace:    { el: 'gallery-peace',    pages: range(65, 81) },
+      other:    { el: 'gallery-other',    pages: [...range(1,3), ...range(82,85)] }
+    };
+
+    function range(start, end) {
+      const arr = [];
+      for (let i = start; i <= end; i++) arr.push(i);
+      return arr;
+    }
+
+    // 动态生成画廊
+    Object.values(galleries).forEach(g => {
+      const container = document.getElementById(g.el);
+      if (!container) return;
+      g.pages.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.onclick = (e) => openLightbox(g.pages, p, e);
+        const img = document.createElement('img');
+        img.src = PORTFOLIO_PATH + 'page_' + String(p).padStart(2, '0') + '.jpg';
+        img.alt = 'Page ' + p;
+        img.loading = 'lazy';
+        item.appendChild(img);
+        container.appendChild(item);
+      });
+    });
+
+    // 和平精英画廊末尾追加参考图
+    const peaceExtra = ['images/78.png', 'images/79.png'];
+    const peaceContainer = document.getElementById('gallery-peace');
+    if (peaceContainer) {
+      peaceExtra.forEach((src, i) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.onclick = (e) => {
+          e.stopPropagation();
+          document.getElementById('lightbox-img').src = src;
+          document.getElementById('lb-counter').textContent = '参考图 ' + (i + 1) + ' / 2';
+          document.getElementById('lightbox').classList.add('show');
+          document.body.style.overflow = 'hidden';
+        };
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '参考图' + (i + 1);
+        img.loading = 'lazy';
+        item.appendChild(img);
+        peaceContainer.appendChild(item);
+      });
+    }
+
+    /* ===== 灯箱 ===== */
+    let lbPages = [], lbIndex = 0;
+
+    function openLightbox(pages, currentPage, e) {
+      e.stopPropagation();
+      lbPages = pages;
+      lbIndex = pages.indexOf(currentPage);
+      showLightboxImage();
+      document.getElementById('lightbox').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showLightboxImage() {
+      const p = lbPages[lbIndex];
+      document.getElementById('lightbox-img').src = PORTFOLIO_PATH + 'page_' + String(p).padStart(2, '0') + '.jpg';
+      document.getElementById('lb-counter').textContent = (lbIndex + 1) + ' / ' + lbPages.length;
+    }
+
+    function navLightbox(dir) {
+      lbIndex = (lbIndex + dir + lbPages.length) % lbPages.length;
+      showLightboxImage();
+    }
+
+    function closeLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox')) return;
+      document.getElementById('lightbox').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('lightbox').classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+    });
+
+    /* ===== Tab 切换 ===== */
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    function filterGames(cat, btn) {
+      document.querySelectorAll('#game-filters .filter-tag').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#tab-gaming .game-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.category.split(' ').includes(cat)) ? '' : 'none';
+      });
+    }
+
+    function filterOther(cat, btn) {
+      document.querySelectorAll('#other-filters .filter-tag').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#other-grid .portfolio-item').forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.category.split(' ').includes(cat)) ? '' : 'none';
+      });
+    }
+
+    const modalData = {
+      nike: {
+        title: '耐克年货节视觉运营活动',
+        tags: ['AIGC', '视觉设计', '2026'],
+        body: `<h4>项目背景</h4><p>耐克年货焕新季，需要统一的视觉运营活动方案，覆盖天猫旗舰店多场景、多终端。</p>
+<h4>创意方向</h4><p>基于关键词<strong>「年味」「优惠」「焕新」</strong>，传达"新年购新衣"的品牌理念。配色选用经典红 + 鎏金黄 + 开运橙三色体系，打造醒目、具有互动吸引力的视觉氛围。</p>
+<h4>字体设计</h4><p>参考方正胖头鱼简体笔画位置与站酷快乐体字型，重绘变形后增加立体块面与圆角细节，采用"白-红-金"三层立体效果，提升醒目度与节日质感。</p>
+<h4>AI工具应用</h4><p>运用 Midjourney + Liblib + GPT 快速生成IP形象、场景元素与3D组件；制定视觉分层规范与头图规格，实现多场景风格统一。</p>
+<h4>核心成果</h4><p>总结并沉淀<strong>标准化提示词公式</strong>，实现设计资产高效复用，显著提升团队产出效率；完成跨场景用户体验一致性设计，降低用户认知成本。</p>`
+      },
+      bilibili: {
+        title: 'Bilibili 用户成长体系优化',
+        tags: ['交互设计', '用户激励', '2025'],
+        body: `<h4>项目背景</h4><p>B站作为PUGC视频社区头部平台，用户总体活跃度和使用频率偏低。现有等级系统机制滞后，用户成长动力缺失，个人等级页存在<strong>感知缺失、粘性薄弱、运营载体缺失、品牌调性弱</strong>四大问题。</p>
+<h4>设计目标</h4><p>围绕三大方向：<strong>① 成长路径可视化</strong>（重构个人等级页，明确成长任务）<strong>② 激励机制</strong>（增设每日签到+任务体系）<strong>③ 多触点信息传达</strong>（全链路活动透出）。</p>
+<h4>设计过程</h4><p>产品自查：模拟用户查询链路，发现评论区等级不可交互、搜索无结果等体验断层 → 竞品分析：对比淘宝/京东/美团/豆包/快手的会员页与活动链路 → 设计语言建立：以B站小电视为核心，统一品牌/色彩/结构/质感 → 框架重构：头部升级、权益图标规范化（48px/8px圆角）、任务icon统一渐变45°+轻拟物质感 → 每日签到页+每日任务页+成长值排行榜三层激励闭环 → 开屏弹窗+悬浮窗+评论区勋章+排行榜四大触点全链路活动透出。</p>
+<h4>设计复盘</h4><p>✅ 掌握了全链路激励体系的设计方法，深化"以用户为中心"的理念<br>✅ 熟练运用AIGC工具辅助视觉表达，提升效率与品牌感知<br>⚠️ 受限于项目周期，未开展完整用户调研与数据验证；动效与微交互细节有待打磨</p>`
+      },
+      photon: {
+        title: '腾讯光子创造营 · 和平精英',
+        tags: ['游戏GUI', '交互设计', '2026'],
+        body: `<h4>背景</h4><p>入选腾讯光子创造营，进入和平精英项目组进行交互方向学习与实践。</p>
+<h4>学习内容</h4><p>深入学习游戏美术GUI及玩家游戏体验与交互的理论知识。</p>
+<h4>项目实操</h4><p>细致研究夏日海豚岛主题活动的游戏美术设计，从活动入口UI到游戏内场景交互的全链路体验分析。</p>
+<h4>收获</h4><p>建立了游戏UX的系统认知，理解了"沉浸感"在游戏交互中的核心地位。</p>`
+      },
+      sanhe: {
+        title: '三合食品 Web端规范优化',
+        tags: ['UI优化', '用户研究', '2026'],
+        body: `<h4>背景</h4><p>福建三合食品科技有限公司Web端存在间距不统一、屏效低、视觉观感陈旧等问题。</p>
+<h4>优化内容</h4><p>Web端间距规范统一优化，提升界面屏效，美化视觉观感。</p>
+<h4>用户研究</h4><p>参与公司用户研究，精细化分析客户群体特征，提出有效优化建议。</p>
+<h4>成果</h4><p>完成Web端设计规范升级，为后续产品迭代奠定基础。</p>`
+      }
+    };
+
+    function openModal(id) {
+      const d = modalData[id]; if (!d) return;
+      document.getElementById('modal-content').innerHTML =
+        '<h3>' + d.title + '</h3><div class="modal-tags">' +
+        d.tags.map(t => '<span class="item-tag">' + t + '</span>').join('') +
+        '</div><div class="modal-body">' + d.body + '</div>';
+      document.getElementById('modal-overlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      if (e && e.target !== document.getElementById('modal-overlay')) return;
+      document.getElementById('modal-overlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+</body>
+</html>

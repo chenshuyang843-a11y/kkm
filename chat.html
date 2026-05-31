@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI聊天 - 陈舒阳</title>
+  <meta name="description" content="跟陈舒阳的AI助手聊天，了解她的经历、作品和爱好">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">🌸 陈舒阳</a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="about.html">关于我</a></li>
+      <li><a href="experience.html">经历</a></li>
+      <li><a href="portfolio.html">作品集</a></li>
+      <li><a href="life.html">课余生活</a></li>
+      <li><a href="chat.html" class="active">AI 聊天</a></li>
+      <li><a href="games.html">小游戏</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h2>AI 聊天</h2>
+    <p class="subtitle">跟我的AI助手聊聊吧～你想了解什么？</p>
+  </section>
+
+  <div class="chat-container">
+    <div class="chat-window">
+      <div class="chat-messages" id="chatMessages">
+        <!-- 初始欢迎消息 -->
+        <div class="chat-msg bot">
+          嗨！我是陈舒阳的AI小助手 👋<br>
+          你可以问我关于她的经历、作品、爱好、游戏等等～<br>
+          或者直接点下面的快捷提问试试！
+          <div class="msg-time">刚刚</div>
+        </div>
+      </div>
+
+      <!-- 快捷提问 -->
+      <div class="quick-asks" id="quickAsks">
+        <button onclick="sendQuick('简单介绍一下陈舒阳吧')">👋 自我介绍</button>
+        <button onclick="sendQuick('她有什么项目经历？')">💼 项目经历</button>
+        <button onclick="sendQuick('她游戏玩得怎么样？')">🎮 游戏水平</button>
+        <button onclick="sendQuick('她适合什么样的岗位？')">🎯 求职优势</button>
+        <button onclick="sendQuick('她有什么兴趣爱好？')">💝 兴趣爱好</button>
+        <button onclick="sendQuick('怎么联系她？')">📧 联系方式</button>
+      </div>
+
+      <!-- 输入区 -->
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()">发送</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 陈舒阳 · 用心记录生活</p>
+  </footer>
+
+  <script>
+    /* ===== AI聊天引擎 ===== */
+
+    // 🔧 修改这里的回复内容，让AI更准确地代表你
+    const knowledgeBase = [
+      {
+        keywords: ['你好','hi','hello','嗨','在吗','嘿'],
+        reply: '嗨！你好呀～欢迎来到陈舒阳的个人小站！我是她的AI小助手🌸<br><br>你可以问我任何关于她的问题——经历、作品、游戏、爱好……随便聊！就算我不知道，我也会努力给你一个有趣的回答哈哈～'
+      },
+      {
+        keywords: ['名字','是谁','陈舒阳','介绍','自我介绍','你是谁'],
+        reply: '她叫<strong>陈舒阳</strong>，一个充满能量的20岁女生～<br><br>🎨 视觉传达设计专业，但对<strong>交互设计和用户体验</strong>有着超乎寻常的热情<br>🤖 熟练玩转AI设计工具，ComfyUI、Midjourney、GPT都是她的日常搭档<br>🎮 重度游戏玩家，和平精英+原神加起来快8000小时了<br>💃 课余还跳街舞、玩摄影、做主持……<br><br>总之是个<strong>不设限</strong>的人——设计、游戏、AI、生活，她都想做到最好 ✨'
+      },
+      {
+        keywords: ['专业','学校','大学','学历','教育','读什么','学什么','江西'],
+        reply: '陈舒阳就读于<strong>江西科技学院</strong>，<strong>视觉传达设计</strong>专业本科（2023-2027）。<br><br>别看是视觉传达，她的能力远远超出了这个范畴——用户体验设计、交互原型、AIGC工作流、甚至Vibe Coding都有涉猎。主修课程涵盖了UI设计、信息可视化、IP设计、品牌VI、商业插画、广告创意等等。<br><br>她的意向岗位是<strong>交互设计 / 用户体验设计</strong>方向，一个视觉+交互+AI的复合型选手 ✨'
+      },
+      {
+        keywords: ['工作','实习','经历','做过什么','项目','职业','经验'],
+        reply: '她的项目经历挺能打的！<br><br>👟 <strong>耐克年货节</strong>（2026）— 主导AIGC视觉设计，用AI工具矩阵高效产出<br>🎮 <strong>腾讯光子创造营</strong>（2026）— 和平精英项目交互方向，研究游戏GUI<br>🖥️ <strong>三合食品</strong>（2026）— Web端规范优化+用户研究<br>📺 <strong>B站用户成长体系</strong>（2025）— 从0构建等级勋章+激励闭环<br>🧵 <strong>小毛虫科技</strong>（2025）— 独立完成6套亚马逊海外桌布设计<br>🏢 <strong>盈诚企业服务</strong>（2024）— 从VI手册到社媒运营全链路<br><br>从大二就开始积累实战经验了，这在同龄人里真的不多见～'
+      },
+      {
+        keywords: ['作品','ux','设计项目','portfolio','案例','作品集'],
+        reply: '她的作品集很有看点！<br><br>📺 <strong>B站用户成长体系</strong> — 全链路激励设计，从等级勋章到签到闭环<br>👟 <strong>耐克年货节</strong> — AI驱动的视觉运营方案<br>🎯 <strong>和平精英操作优化</strong> — 6大痛点方案，从女玩家视角出发<br>🖥️ <strong>三合食品Web规范</strong> — 精细化UI优化<br><br>每个作品都有完整的设计过程和85页作品集PDF在「作品集」页面可以翻看！设计思路非常清晰～'
+      },
+      {
+        keywords: ['游戏','原神','和平精英','第五人格','王者','元气骑士','蛋仔'],
+        reply: '她游戏玩得是真的深！不只是"玩过"，是"玩明白了"那种 🎮<br><br>🔫 <strong>和平精英</strong> — 2500+小时，多赛季王牌，氪金1.5w，对游戏UI和经济系统都有研究<br>🌿 <strong>原神</strong> — 5000+小时，37五星，深渊满星常客，氪金2.7w<br>⚔️ <strong>王者荣耀</strong> — 福州74李元芳！6个区标，3000+氪金<br>🕯️ <strong>第五人格</strong> — 四阶一，看过线下赛<br>⚡ <strong>元气骑士</strong> — 吊炸天通关，对Roguelike UI有研究<br><br>她不是那种"玩过就说了解"的人——她对游戏的理解是有深度的，这也是为什么她能做好游戏UX。'
+      },
+      {
+        keywords: ['ai','aigc','midjourney','comfyui','工具','软件','技能','能力'],
+        reply: '她的工具栈挺全的！<br><br>🤖 <strong>AIGC</strong>：ComfyUI、Midjourney、Liblib、GPT，Prompt Engineering熟到能沉淀标准化公式<br>🎨 <strong>设计</strong>：Figma（高阶玩家）、PS、AI、Protopie、AE、Premiere、Procreate、Sketch<br>💻 <strong>其他</strong>：Vibe Coding、设计系统搭建<br>📝 <strong>软技能</strong>：双语主持、用户研究、项目协调<br><br>最厉害的是她把AI真正融入了设计工作流——在耐克项目里沉淀的提示词公式直接提升了整个团队的产出效率。这不只是会用工具，这是会用工具<strong>解决问题</strong>。'
+      },
+      {
+        keywords: ['爱好','喜欢','兴趣','平时','业余','空闲','生活'],
+        reply: '她的课余生活超级丰富！<br><br>📷 摄影 — 喜欢捕捉光影和城市角落<br>📚 阅读 — 设计类、小说类都看<br>🎤 主持 — 校英语角双语主持人，舞台感超好<br>🕺 街舞 — 用身体表达节奏<br>🍜 美食 & 探店 — 走街串巷找好吃好喝的<br>🎮 游戏 — 上面说了，深度玩家！<br><br>不是那种只会坐在电脑前做设计的人——她生活得很立体，这也是她设计的灵感来源 ✨'
+      },
+      {
+        keywords: ['联系','微信','邮箱','电话','找到','联系我','contact','加'],
+        reply: '想联系她？太好啦！<br><br>📧 邮箱：<strong>16659005053@163.com</strong><br>📞 电话：<strong>16659005053</strong><br>💬 微信：去「联系我」页面查看<br><br>她挺开朗的，欢迎来聊设计、AIGC、游戏UX，或者就是单纯交个朋友～不用担心冷场哈哈 ☕'
+      },
+      {
+        keywords: ['荣誉','获奖','证书','竞赛','比赛','奖项'],
+        reply: '她的奖状能铺一桌子！🏆<br><br>🏅 学院奖国家级优秀奖（实效创意+实效传播双料）<br>🥈 香港当代创新设计奖 国银+国铜<br>🏅 大广赛省二等奖<br>🎖️ 米兰设计周省三等奖<br>💻 计算机设计大赛省三等奖<br>⭐ 东方创意之星省铜奖<br>📜 蓝桥杯省优秀奖<br>🗣️ 模联英文委员会荣誉提名<br>🎤 外研社国才杯演讲组校银<br><br>从设计到英语到计算机——她的竞赛履历跨度很大，说明学习能力和适应力都很强 👍'
+      },
+      {
+        keywords: ['英语','英语角','会长','社团','学生会','广播','主持'],
+        reply: '她在校期间真的没闲着！<br><br>🗣️ <strong>校英语协会会长</strong>（2024-2025）— 30+场英语角，覆盖7000+人，还是双语主持人<br>📻 <strong>校广播电视台负责人</strong>（2024-2025）— 节目策划+播出<br>📋 <strong>学生会权益服务部部长</strong>（2023-2024）— 服务同学，推动校园改进<br>🏛️ <strong>模拟联合国</strong> — 英文委员会荣誉提名，独立用英语对接海外代表<br><br>组织能力、表达能力、领导力——这些课上学不到的东西，她都在实践中锻炼出来了。'
+      },
+      {
+        keywords: ['城市','哪里','坐标','住','福州','福建','家乡'],
+        reply: '她是<strong>福建福州</strong>人～台江区，目前在江西科技学院读大学。<br><br>福州是个很有烟火气的城市，可能也正是这种环境塑造了她既接地气又有审美的性格吧～如果你也是福州人，说不定在哪家咖啡馆或设计展遇到过呢 ☕'
+      },
+      {
+        keywords: ['面试','适合','为什么','录用','招','优势','能力','评价','怎么样'],
+        reply: '这个问题问得好！客观来说，陈舒阳有几个比较突出的优势：<br><br>🎯 <strong>复合型能力</strong> — 视觉+交互+AI+用户研究，不是单一技能型选手<br>🚀 <strong>实战经验早</strong> — 大二就开始接商业项目和实习，比同龄人多了两年的积累<br>🎮 <strong>游戏理解深</strong> — 不是"玩过"，是真正理解游戏交互和玩家心理<br>🤖 <strong>AI原生思维</strong> — 已经把AI融入设计工作流，效率远超传统设计师<br>💬 <strong>沟通+组织力</strong> — 英语协会会长+双语主持+模联经历，表达和协作都在线<br><br>如果要找一个"能干活、有想法、好合作"的设计师，她是个很靠谱的选择 👍'
+      },
+      {
+        keywords: ['设计','ui','ux','交互','用户体验','视觉'],
+        reply: '说到设计，陈舒阳的理解是这样的——<br><br>设计不只是画图，是<strong>解决问题</strong>。她在B站项目里重构了整个用户成长体系，从调研到框架到视觉落地；在和平精英项目里从女玩家视角发现了6个真实痛点并逐一给出方案。<br><br>她的设计方法论很清晰：<strong>发现问题 → 理解用户 → 竞品调研 → 设计方案 → 复盘迭代</strong>。<br><br>而且她有个独特优势——她自己就是重度游戏玩家，所以做游戏UX的时候是真的能共情用户的。这种"既是设计师又是玩家"的双重视角很难得。'
+      },
+      {
+        keywords: ['街舞','跳舞','dance','摄影','拍照','照片','写生','画画','插画','美食','探店','咖啡','奶茶'],
+        reply: '哈哈说到这个她就来劲了！<br><br>🕺 街舞是她释放压力的方式，跟着音乐动起来什么都不用想<br>📷 摄影让她学会观察——街角的光影、黄昏的天空，都是素材<br>🖌️ 写生和插画是她的"慢时光"，一支笔一张纸能待一下午<br>🍜 探店嘛，福州大大小小的咖啡馆和有意思的小店她门儿清<br><br>她不是那种只会埋头做设计的人，生活得很丰富——这些经历最后都会变成设计的养分 🌸'
+      },
+      {
+        keywords: ['谢谢','感谢','多谢','thanks','thx'],
+        reply: '不客气呀！能帮到你我也开心～陈舒阳是个很有意思的人，如果你对她还有更多好奇，随时回来问我！😊'
+      },
+      {
+        keywords: ['再见','拜拜','bye','88'],
+        reply: '拜拜～和你聊天很愉快！随时回来，我一直在这儿～祝你今天一切顺利 🌸✨'
+      }
+    ];
+
+    // 智能兜底回复——不管问什么都给出温暖、人性化、有利于陈舒阳的回答
+    function getSmartFallback(input) {
+      const len = input.length;
+      // 短问题——可能是闲聊
+      if (len <= 3) {
+        const shorts = [
+          '嗯嗯～你是在打招呼吗？😊 我是陈舒阳的小助手，随便问我什么都可以哦！',
+          '嘿嘿，多说一点嘛～我可以跟你聊她的设计经历、游戏心得、或者任何你想了解的！',
+          '收到！虽然没太明白具体想问什么，但没关系～你可以试试下面的快捷提问，或者随便问我关于她的事情！'
+        ];
+        return shorts[Math.floor(Math.random() * shorts.length)];
+      }
+
+      // 中等问题——可能是具体询问
+      if (len <= 15) {
+        const mids = [
+          '这个问题挺有意思的！虽然我的知识库里没有直接的答案，但我觉得陈舒阳如果在这里，她大概会用自己的方式去理解并给出一个真诚的回应～<br><br>要不你试试问我关于她的<strong>项目经历、游戏经验或者设计理念</strong>？这些我比较熟！',
+          '哎呀，这个问题有点超出我的训练数据了～<br>不过没关系！陈舒阳这个人最大的特点就是<strong>学习能力强、适应力好</strong>——就算遇到不熟悉的问题，她也会想办法搞定。<br>你想了解她哪方面呢？我帮你找找答案～',
+          '好问题！虽然我暂时没法给出完美答案，但可以说陈舒阳是个<strong>善于思考和解决问题</strong>的人。她在设计里经常面对各种不确定的需求，但总能找到合适的方案。<br><br>你可以去「作品集」页看看她的设计思路，或者问我其他问题～'
+        ];
+        return mids[Math.floor(Math.random() * mids.length)];
+      }
+
+      // 长问题——认真回复
+      const longs = [
+        '哇，你问得好认真！虽然这个问题在我的知识范围之外，但我可以感受到你对这个话题的关注～<br><br>陈舒阳是个<strong>喜欢钻研</strong>的人，如果遇到这类问题，她应该会先去深入了解、做调研、然后给出有依据的回答。这也是她做设计的习惯——<strong>不拍脑袋，用调研说话</strong>。<br><br>要不换个话题？关于她的项目经历、游戏理解、或者设计工具使用，我都很乐意聊！✨',
+        '这个问题很有深度！虽然我这个小助手知识有限，但我知道陈舒阳是个<strong>跨界能力很强</strong>的人——设计、AI、游戏、英语……她在不同领域之间能找到连接点。<br><br>也许正是这种跨领域的思维方式，让她在面对复杂问题时能有更独特的视角？<br><br>你可以去她的「经历」或「作品集」页面看看她实际做过的项目，比我说一万句都有说服力 😊',
+        '嗯…这触及到我的知识盲区了！不过没关系——<br><br>陈舒阳在学习和工作中经常遇到新问题，她的做法是<strong>先拆解、再调研、然后快速验证</strong>。这种思维方式让她在面对陌生领域时也能快速上手。她在多个项目中都展现了这种能力。<br><br>不如试试下面的快捷提问？或者直接去翻翻她的作品集，那些设计稿比任何文字都更能说明问题 🌸',
+        '说实话我不太确定该怎么回答这个问题 😅<br>但有一点我很确定——陈舒阳是个<strong>不甘于平庸</strong>的人。从她20岁就已经积累了这么多项目经验和竞赛奖项就能看出来，她对待每件事都很认真。<br><br>也许这个问题本身就是一个值得探讨的话题？你可以试着问问她对相关领域的看法～'
+      ];
+      return longs[Math.floor(Math.random() * longs.length)];
+    }
+
+    function getReply(input) {
+      const lower = input.toLowerCase();
+      let bestMatch = null;
+      let bestScore = 0;
+
+      for (const item of knowledgeBase) {
+        let score = 0;
+        for (const kw of item.keywords) {
+          if (lower.includes(kw)) score++;
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = item;
+        }
+      }
+
+      if (bestMatch && bestScore > 0) return bestMatch.reply;
+      return getSmartFallback(input);
+    }
+
+    function now() {
+      const d = new Date();
+      return d.getHours().toString().padStart(2,'0') + ':' +
+             d.getMinutes().toString().padStart(2,'0');
+    }
+
+    function addMsg(type, text) {
+      const container = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + type;
+      div.innerHTML = text + '<div class="msg-time">' + now() + '</div>';
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      input.focus();
+
+      addMsg('user', text);
+
+      // 模拟打字延迟
+      setTimeout(() => {
+        const reply = getReply(text);
+        addMsg('bot', reply);
+      }, 500 + Math.random() * 800);
+    }
+
+    function sendQuick(text) {
+      document.getElementById('chatInput').value = text;
+      sendMessage();
+    }
+
+    // 初始聚焦
+    document.getElementById('chatInput').focus();
+  </script>
+
+</body>
+</html>
