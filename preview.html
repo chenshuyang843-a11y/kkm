@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品集效果预览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+      background: #fef9fa;
+      color: #3d3838;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    .sub {
+      text-align: center;
+      color: #b0a0a5;
+      margin-bottom: 36px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== 不规则 Bento 网格 ===== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 960px;
+      margin: 0 auto 50px;
+    }
+    .card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(180,140,150,0.07);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(180,140,150,0.2);
+    }
+    .card.span-2 { grid-column: span 2; }
+    .card.span-2 .card-img { height: 240px; }
+    .card-img {
+      height: 160px;
+      background: linear-gradient(135deg, #fef0f4, #fce8ee);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .card:hover .card-img { transform: scale(1.04); }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(60,30,40,0.6) 100%);
+      opacity: 0; transition: opacity 0.4s;
+      display: flex; align-items: flex-end; padding: 20px;
+      color: white; font-weight: 600; font-size: 1rem;
+    }
+    .card:hover .card-img-overlay { opacity: 1; }
+    .card-body { padding: 20px; }
+    .card-body h4 { font-size: 1.05rem; margin-bottom: 4px; }
+    .card-body p { font-size: 0.85rem; color: #7a6e72; line-height: 1.6; }
+    .tag {
+      display: inline-block; padding: 4px 12px;
+      background: linear-gradient(135deg, #fef0f3, #fce4ea);
+      color: #e8a0b0; border-radius: 12px; font-size: 0.75rem; margin-right: 6px; margin-top: 6px;
+    }
+
+    /* ===== 画廊缩略图发光效果 ===== */
+    .gallery-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px; max-width: 960px; margin: 0 auto 50px;
+    }
+    .gallery-thumb {
+      aspect-ratio: 0.707;
+      background: linear-gradient(135deg, #fef0f4 25%, #fce8ee 50%, #fdf0f3 75%);
+      background-size: 200% 200%;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      border: 2px solid transparent;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .gallery-thumb:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 24px rgba(232,160,176,0.35), 0 8px 24px rgba(180,140,150,0.15);
+      border-color: rgba(255,255,255,0.9);
+    }
+
+    /* ===== 数字跳动 ===== */
+    .stats-row {
+      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+      max-width: 960px; margin: 0 auto 40px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 24px 32px;
+      text-align: center;
+      min-width: 140px;
+      box-shadow: 0 2px 16px rgba(180,140,150,0.07);
+    }
+    .stat-number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #e8a0b0, #e8b4c0);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.8rem; color: #b0a0a5; margin-top: 4px; }
+
+    /* ===== 3D 倾斜 ===== */
+    .tilt-section { perspective: 1000px; max-width: 960px; margin: 0 auto 50px; }
+    .tilt-card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(180,140,150,0.1);
+      transition: box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+    }
+    .tilt-card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .tilt-card p { color: #7a6e72; }
+    .tilt-emoji { font-size: 4rem; margin-bottom: 16px; }
+
+    /* ===== 滚动渐现 ===== */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== 标题 ===== */
+    .section-label {
+      text-align: center; color: #b0a0a5; font-size: 0.85rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin: 40px 0 20px;
+    }
+    hr.fade {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(220,190,198,0.5), transparent);
+      margin: 40px 0;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .card.span-2 { grid-column: span 1; }
+      .gallery-row { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🌸 作品集效果预览</h2>
+  <p class="sub">方案一（杂志编排风）+ 3D倾斜 + 数字跳动</p>
+
+  <!-- 效果1: 不规则 Bento 网格 + 悬停 -->
+  <div class="section-label">✦ 不规则瀑布流网格 + 图片渐变遮罩</div>
+  <div class="bento-grid">
+    <div class="card span-2 reveal">
+      <div class="card-img">📺<div class="card-img-overlay">查看项目 →</div></div>
+      <div class="card-body">
+        <h4>B站用户成长体系</h4>
+        <p>全链路激励设计 · 等级勋章 · 签到闭环</p>
+        <span class="tag">UX设计</span><span class="tag">用户研究</span>
+      </div>
+    </div>
+    <div class="card reveal">
+      <div class="card-img">👟<div class="card-img-overlay">查看项目 →</div></div>
+      <div class="card-body">
+        <h4>耐克年货节</h4>
+        <p>AI驱动的视觉运营方案</p>
+        <span class="tag">AIGC</span>
+      </div>
+    </div>
+    <div class="card reveal" style="transition-delay: 0.1s;">
+      <div class="card-img">🎮<div class="card-img-overlay">查看项目 →</div></div>
+      <div class="card-body">
+        <h4>和平精英操作优化</h4>
+        <p>6大痛点方案 · 女玩家视角</p>
+        <span class="tag">游戏UX</span>
+      </div>
+    </div>
+    <div class="card reveal" style="transition-delay: 0.15s;">
+      <div class="card-img">🖥️<div class="card-img-overlay">查看项目 →</div></div>
+      <div class="card-body">
+        <h4>三合食品Web规范</h4>
+        <p>精细化UI优化</p>
+        <span class="tag">UI设计</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="fade">
+
+  <!-- 效果2: 画廊发光 -->
+  <div class="section-label">✦ 画廊缩略图 — 悬停发光 + 照片质感</div>
+  <div class="gallery-row">
+    <div class="gallery-thumb reveal">📄</div>
+    <div class="gallery-thumb reveal" style="transition-delay: 0.08s;">📄</div>
+    <div class="gallery-thumb reveal" style="transition-delay: 0.16s;">📄</div>
+    <div class="gallery-thumb reveal" style="transition-delay: 0.24s;">📄</div>
+    <div class="gallery-thumb reveal" style="transition-delay: 0.32s;">📄</div>
+    <div class="gallery-thumb reveal" style="transition-delay: 0.40s;">📄</div>
+  </div>
+
+  <hr class="fade">
+
+  <!-- 效果3: 数字跳动 -->
+  <div class="section-label">✦ 游戏数据 — 滚动时数字跳动计数</div>
+  <div class="stats-row">
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="2500">0</div>
+      <div class="stat-label">和平精英 · 小时</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="5000">0</div>
+      <div class="stat-label">原神 · 小时</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="37">0</div>
+      <div class="stat-label">原神 · 五星角色</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="15000">0</div>
+      <div class="stat-label">和平精英 · 氪金(元)</div>
+    </div>
+  </div>
+
+  <hr class="fade">
+
+  <!-- 效果4: 3D 倾斜 -->
+  <div class="section-label">✦ 3D 卡片倾斜 — 鼠标在卡片上移动试试</div>
+  <div class="tilt-section">
+    <div class="tilt-card" id="tiltCard">
+      <div class="tilt-emoji">🖱️</div>
+      <h3>把鼠标移到我上面</h3>
+      <p>我会跟着鼠标方向微微倾斜～就像浮在桌面上</p>
+    </div>
+  </div>
+
+  <p style="text-align:center;color:#b0a0a5;margin-top:40px;font-size:0.85rem;">
+    💡 <strong>实际效果</strong>会比这个预览好很多——真实的图片、字体、间距、玻璃质感和粉色渐变<br>
+    这只是一个快速概念演示～
+  </p>
+
+  <script>
+    // === 滚动渐现 ===
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // === 数字跳动 ===
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          const duration = 1500;
+          const start = performance.now();
+
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // easeOutExpo
+            const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+            const current = Math.floor(eased * target);
+            el.textContent = current.toLocaleString();
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number').forEach(el => countObserver.observe(el));
+
+    // === 3D 倾斜 ===
+    const tiltCard = document.getElementById('tiltCard');
+
+    tiltCard.addEventListener('mousemove', (e) => {
+      const rect = tiltCard.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;   // 0~1
+      const y = (e.clientY - rect.top) / rect.height;    // 0~1
+      const rotateY = (x - 0.5) * 16;  // -8° ~ +8°
+      const rotateX = (0.5 - y) * 16;  // +8° ~ -8°
+      tiltCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      tiltCard.style.boxShadow = `
+        ${-rotateY * 1.5}px ${rotateX * 1.5}px 40px rgba(180,140,150,0.2),
+        0 8px 32px rgba(180,140,150,0.12)
+      `;
+    });
+
+    tiltCard.addEventListener('mouseleave', () => {
+      tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      tiltCard.style.boxShadow = '0 4px 24px rgba(180,140,150,0.1)';
+      tiltCard.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease';
+    });
+
+    tiltCard.addEventListener('mouseenter', () => {
+      tiltCard.style.transition = 'transform 0.1s ease, box-shadow 0.3s ease';
+    });
+
+    // 初始给可见的元素添加 visible
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add('visible');
+      });
+    }, 200);
+  </script>
+
+</body>
+</html>

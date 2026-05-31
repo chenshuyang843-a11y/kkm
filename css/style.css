@@ -487,11 +487,19 @@ body {
 .tab-content { display: none; max-width: 960px; margin: 0 auto; padding: 0 24px 60px; }
 .tab-content.active { display: block; }
 
-/* 作品卡片 */
+/* ===== 滚动渐现动画 ===== */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* 作品卡片 — 不规则 Bento 网格 */
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .portfolio-item {
@@ -501,32 +509,55 @@ body {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: all 0.4s;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
+  position: relative;
 }
 .portfolio-item:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(180,140,150,0.22);
 }
+/* 重点卡片占 2 列 */
+.portfolio-item.featured { grid-column: span 2; }
+.portfolio-item.featured .item-img { height: 260px; }
+
 .portfolio-item .item-img {
   width: 100%; height: 200px;
   background: linear-gradient(135deg, #fef0f4, #fce8ee);
   display: flex; align-items: center; justify-content: center;
   font-size: 3rem; color: var(--pink);
+  position: relative; overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.portfolio-item .item-img img { width: 100%; height: 100%; object-fit: cover; }
-.portfolio-item .item-info { padding: 20px; }
+.portfolio-item:hover .item-img { transform: scale(1.05); }
+.portfolio-item .item-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+.portfolio-item:hover .item-img img { transform: scale(1.08); }
+
+/* 图片遮罩层 */
+.item-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(60,25,35,0.55) 100%);
+  opacity: 0; transition: opacity 0.4s ease;
+  display: flex; align-items: flex-end; padding: 20px 24px;
+  color: white; font-weight: 600; font-size: 0.95rem;
+  z-index: 1;
+}
+.portfolio-item:hover .item-img-overlay { opacity: 1; }
+
+.portfolio-item .item-info { padding: 22px; }
 .portfolio-item .item-info h4 { font-size: 1.05rem; color: var(--text); margin-bottom: 6px; }
 .portfolio-item .item-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
 
 .portfolio-item .item-tag {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 5px 14px;
   background: linear-gradient(135deg, #fef0f3, #fce4ea);
   color: var(--pink);
-  border-radius: 12px; font-size: 0.75rem;
+  border-radius: 14px; font-size: 0.75rem;
   margin-right: 6px; margin-top: 4px;
+  transition: all 0.3s;
 }
+.portfolio-item:hover .item-tag { background: linear-gradient(135deg, #fce4ea, #f9d4de); }
 
 /* 作品弹窗 */
 .modal-overlay {
@@ -590,11 +621,11 @@ body {
   border-color: var(--pink); color: var(--pink);
 }
 
-/* 游戏卡片 */
+/* 游戏卡片 — 升级悬停 + 重点卡大尺寸 */
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px; margin-bottom: 40px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-bottom: 40px;
 }
 
 .game-card {
@@ -604,17 +635,27 @@ body {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: all 0.4s;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.game-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.game-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 50px rgba(180,140,150,0.22);
+}
+.game-card.featured { grid-column: span 2; }
+.game-card.featured .game-cover { height: 200px; }
 
 .game-card .game-cover {
-  width: 100%; height: 160px;
+  width: 100%; height: 140px;
   background: linear-gradient(135deg, #fef0f4, #fce8ee);
   display: flex; align-items: center; justify-content: center;
   font-size: 3rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.game-card .game-cover img { width: 100%; height: 100%; object-fit: cover; }
+.game-card:hover .game-cover { transform: scale(1.05); }
+.game-card .game-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+.game-card:hover .game-cover img { transform: scale(1.08); }
+
 .game-card .game-info { padding: 18px; }
 .game-card .game-info h4 { font-size: 1rem; color: var(--text); margin-bottom: 4px; }
 .game-card .game-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
@@ -623,12 +664,14 @@ body {
 .game-tags { margin-top: 8px; }
 .game-tags .game-tag {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 4px 12px;
   background: linear-gradient(135deg, #fef0f3, #fce4ea);
   color: var(--pink);
-  border-radius: 10px; font-size: 0.72rem;
-  margin-right: 4px;
+  border-radius: 12px; font-size: 0.72rem;
+  margin-right: 5px;
+  transition: all 0.3s;
 }
+.game-card:hover .game-tag { background: linear-gradient(135deg, #fce4ea, #f9d4de); }
 
 /* 游戏洞察 */
 .insight-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border); }
@@ -644,11 +687,49 @@ body {
   box-shadow: var(--shadow-card);
   border-left: 4px solid;
   border-image: linear-gradient(180deg, var(--pink), var(--rose)) 1;
-  transition: transform 0.3s;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.insight-card:hover { transform: translateY(-2px); }
+.insight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(180,140,150,0.18);
+}
 .insight-card h4 { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
 .insight-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; }
+
+/* ===== 3D 卡片倾斜 ===== */
+.tilt-container { perspective: 1000px; }
+.tilt-container .portfolio-item,
+.tilt-container .game-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+/* 移动端禁用 3D 倾斜 */
+@media (hover: none) {
+  .tilt-container .portfolio-item,
+  .tilt-container .game-card { transform-style: flat; }
+}
+
+/* ===== 数字跳动统计 ===== */
+.stat-number {
+  font-size: 2.2rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--pink), var(--rose));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* ===== Tab 切换动画 ===== */
+.tab-content {
+  display: none; max-width: 960px; margin: 0 auto; padding: 0 24px 60px;
+}
+.tab-content.active {
+  display: block;
+  animation: tabIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@keyframes tabIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ===== 课余生活 ===== */
 .life-grid {
@@ -958,47 +1039,66 @@ footer {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .gallery-item {
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
   background: var(--pink-light);
   aspect-ratio: 0.707;
-  max-height: 240px;
+  max-height: 250px;
+  border: 2px solid transparent;
+  position: relative;
 }
+/* 照片印刷风格 */
+.gallery-item::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.5);
+  opacity: 0; transition: opacity 0.4s;
+  pointer-events: none; z-index: 1;
+}
+.gallery-item:hover::after { opacity: 1; }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
+.gallery-item:hover img { transform: scale(1.06); }
 
 .gallery-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.9);
+  box-shadow: 0 0 24px rgba(232,160,176,0.3), 0 8px 32px rgba(180,140,150,0.15);
 }
 
 
-/* 图片灯箱 */
+/* 图片灯箱 — 增强动画 */
 .img-lightbox {
   display: none;
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(30,15,20,0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(20,10,14,0.92);
+  backdrop-filter: blur(12px);
   z-index: 300;
   align-items: center; justify-content: center;
   flex-direction: column;
   padding: 20px;
 }
-
 .img-lightbox.show { display: flex; }
+.img-lightbox.show img { animation: lbZoomIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); }
+@keyframes lbZoomIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
 
 .img-lightbox img {
   max-width: 75vw;
@@ -1076,8 +1176,10 @@ footer {
 
   .portfolio-tabs .tab-btn { padding: 8px 16px; font-size: 0.8rem; }
 
-  .portfolio-grid, .game-grid, .life-grid, .cert-grid,
-  .insight-cards { grid-template-columns: 1fr; }
+  .portfolio-grid, .game-grid { grid-template-columns: 1fr; }
+  .portfolio-item.featured, .game-card.featured { grid-column: span 1; }
+  .portfolio-item.featured .item-img, .game-card.featured .game-cover { height: 180px; }
+  .life-grid, .cert-grid, .insight-cards { grid-template-columns: 1fr; }
 
   .page-header { padding: 50px 20px 14px; }
   .page-header h2 { font-size: 1.5rem; }

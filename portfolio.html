@@ -38,8 +38,8 @@
   <div class="tab-content active" id="tab-ux">
     <div class="portfolio-grid">
 
-      <div class="portfolio-item" onclick="openModal('bilibili')">
-        <div class="item-img img-placeholder">📺</div>
+      <div class="portfolio-item featured reveal" onclick="openModal('bilibili')" data-tilt>
+        <div class="item-img img-placeholder">📺<span class="item-img-overlay">查看项目 →</span></div>
         <div class="item-info">
           <h4>Bilibili 用户成长体系优化</h4>
           <p>构建全新等级勋章体系，设计签到弹窗与悬浮入口，打造"触达—激励—反馈"闭环体验。</p>
@@ -49,8 +49,8 @@
         </div>
       </div>
 
-      <div class="portfolio-item" onclick="openModal('nike')">
-        <div class="item-img img-placeholder">👟</div>
+      <div class="portfolio-item reveal" onclick="openModal('nike')" data-tilt>
+        <div class="item-img img-placeholder">👟<span class="item-img-overlay">查看项目 →</span></div>
         <div class="item-info">
           <h4>耐克年货节视觉运营活动</h4>
           <p>主导活动视觉设计，运用AI工具快速生成IP形象与3D组件，沉淀标准化提示词公式。</p>
@@ -106,28 +106,28 @@
     </div>
 
     <div class="game-grid">
-      <div class="game-card" data-category="fps">
-        <div class="game-cover img-placeholder">🔫</div>
+      <div class="game-card featured reveal" data-category="fps" data-tilt>
+        <div class="game-cover img-placeholder">🔫<span class="item-img-overlay">深度玩家 →</span></div>
         <div class="game-info">
           <h4>和平精英</h4>
-          <div class="game-meta"><span>📱 手游</span><span>⏱️ 2500+小时</span><span>💰 氪金约1.5w</span></div>
+          <div class="game-meta"><span>📱 手游</span><span>⏱️ <span class="stat-number" data-target="2500">2500</span>+小时</span><span>💰 氪金约1.5w</span></div>
           <p class="game-desc">开服玩家至今，多赛季王牌段位。深度了解跳伞逻辑、身法技巧、枪械数值、圈型运营。频繁体验地铁逃生，对复杂经济体系的游戏内UI有一定研究。拥有3个载具皮肤、10+升级枪皮肤、30+把枪皮，千金淑猫等角色皮全套皮肤。</p>
           <div class="game-tags"><span class="game-tag">FPS</span><span class="game-tag">战术竞技</span><span class="game-tag">王牌段位</span></div>
         </div>
       </div>
 
-      <div class="game-card" data-category="openworld">
-        <div class="game-cover img-placeholder">🌿</div>
+      <div class="game-card featured reveal" data-category="openworld" data-tilt>
+        <div class="game-cover img-placeholder">🌿<span class="item-img-overlay">深度玩家 →</span></div>
         <div class="game-info">
           <h4>原神</h4>
-          <div class="game-meta"><span>📱 多平台</span><span>⏱️ 5000+小时</span><span>💰 氪金约2.7w</span></div>
+          <div class="game-meta"><span>📱 多平台</span><span>⏱️ <span class="stat-number" data-target="5000">5000</span>+小时</span><span>💰 氪金约2.7w</span></div>
           <p class="game-desc">开服玩家至今，五星角色37个，4.6前女角色全图鉴。蒙德、枫丹等区域探索度100%，成就数1137。精通配队、元素反应及开放大世界交互逻辑，深渊长期12层无压满星通关，具备极强的战斗数值规划与角色练度管理能力。23、24年大月卡全勤。</p>
           <div class="game-tags"><span class="game-tag">开放世界</span><span class="game-tag">RPG</span><span class="game-tag">满星深渊</span></div>
         </div>
       </div>
 
-      <div class="game-card" data-category="moba">
-        <div class="game-cover img-placeholder">⚔️</div>
+      <div class="game-card reveal" data-category="moba" data-tilt>
+        <div class="game-cover img-placeholder">⚔️<span class="item-img-overlay">查看详情 →</span></div>
         <div class="game-info">
           <h4>王者荣耀</h4>
           <div class="game-meta"><span>📱 手游</span><span>⏱️ 1000+小时</span><span>💰 氪金约3000</span></div>
@@ -136,8 +136,8 @@
         </div>
       </div>
 
-      <div class="game-card" data-category="asym">
-        <div class="game-cover img-placeholder">🕯️</div>
+      <div class="game-card reveal" data-category="asym" data-tilt>
+        <div class="game-cover img-placeholder">🕯️<span class="item-img-overlay">查看详情 →</span></div>
         <div class="game-info">
           <h4>第五人格</h4>
           <div class="game-meta"><span>📱 多平台</span><span>⏱️ 800+小时</span><span>💰 氪金约4000</span></div>
@@ -146,8 +146,8 @@
         </div>
       </div>
 
-      <div class="game-card" data-category="roguelike">
-        <div class="game-cover img-placeholder">⚡</div>
+      <div class="game-card reveal" data-category="roguelike" data-tilt>
+        <div class="game-cover img-placeholder">⚡<span class="item-img-overlay">查看详情 →</span></div>
         <div class="game-info">
           <h4>元气骑士</h4>
           <div class="game-meta"><span>📱 手游</span><span>⏱️ 300+小时</span><span>💰 约40元</span></div>
@@ -156,8 +156,8 @@
         </div>
       </div>
 
-      <div class="game-card" data-category="casual">
-        <div class="game-cover img-placeholder">🥚</div>
+      <div class="game-card reveal" data-category="casual" data-tilt>
+        <div class="game-cover img-placeholder">🥚<span class="item-img-overlay">查看详情 →</span></div>
         <div class="game-info">
           <h4>蛋仔派对</h4>
           <div class="game-meta"><span>📱 手游</span><span>⏱️ 200小时</span><span>💰 氪金约90</span></div>
@@ -171,7 +171,7 @@
     <div class="insight-section">
       <h3>📝 游戏UX项目 & 洞察</h3>
 
-      <div class="insight-card" style="margin-bottom:18px;border-left:4px solid var(--pink);">
+      <div class="insight-card reveal" style="margin-bottom:18px;border-left:4px solid var(--pink);">
         <h4>🎯 和平精英 · 操作体验优化设计（作品集项目）</h4>
         <p style="margin-bottom:8px;color:var(--text-muted);font-size:0.8rem;">TPS射击手游 | 用户研究 · 交互优化 · 打卡体验</p>
         <p><strong>项目背景：</strong>和平精英2019年上线，以TPS第三人称射击为核心，采用外观驱动型付费模式。作为技术一般但热爱记录游戏回忆的手机/平板双端女玩家，发现刚落地阶段的战斗操作与打卡体验存在可优化点。</p>
@@ -182,15 +182,15 @@
       </div>
 
       <div class="insight-cards">
-        <div class="insight-card">
+        <div class="insight-card reveal">
           <h4>《和平精英》夏日海豚岛 — 活动UI中的沉浸感营造</h4>
           <p>在光子创造营期间深入研究了夏日海豚岛主题活动：通过地图场景与UI界面的统一视觉语言、动态天气系统与交互反馈的配合，实现从"大厅—活动入口—游戏场景"的无缝沉浸体验。</p>
         </div>
-        <div class="insight-card">
+        <div class="insight-card reveal">
           <h4>《原神》深境螺旋 — 高难内容对玩家行为的影响</h4>
           <p>作为长期12层满星通关玩家，观察到深渊机制如何通过"角色练度验证—阵容搭配策略—时间压力"三层设计驱动玩家持续投入养成。这种梯度挑战设计对游戏化产品的等级体系搭建有启发意义。</p>
         </div>
-        <div class="insight-card">
+        <div class="insight-card reveal">
           <h4>《第五人格》拍摄模式 — 皮肤获得感与分享体验</h4>
           <p>竞品调研中发现第五人格拍摄模式下可屏蔽所有UI按钮，支持贴脸拍摄细节展示，并设有专用通用动作——这种"为分享而设计"的思路提升了皮肤获得感和玩家自发传播意愿。</p>
         </div>
@@ -210,7 +210,7 @@
     </div>
 
     <div class="portfolio-grid" id="other-grid">
-      <div class="portfolio-item" data-category="photo">
+      <div class="portfolio-item reveal" data-category="photo" data-tilt>
         <div class="item-img img-placeholder">📷</div>
         <div class="item-info">
           <h4>城市街拍系列</h4>
@@ -219,7 +219,7 @@
           <span class="item-tag">2025</span>
         </div>
       </div>
-      <div class="portfolio-item" data-category="writing">
+      <div class="portfolio-item reveal" data-category="writing" data-tilt>
         <div class="item-img img-placeholder">✍️</div>
         <div class="item-info">
           <h4>设计思考随笔</h4>
@@ -228,7 +228,7 @@
           <span class="item-tag">2024</span>
         </div>
       </div>
-      <div class="portfolio-item" data-category="illust">
+      <div class="portfolio-item reveal" data-category="illust" data-tilt>
         <div class="item-img img-placeholder">🖌️</div>
         <div class="item-info">
           <h4>日常插画练习</h4>
@@ -237,7 +237,7 @@
           <span class="item-tag">2024</span>
         </div>
       </div>
-      <div class="portfolio-item" data-category="video">
+      <div class="portfolio-item reveal" data-category="video" data-tilt>
         <div class="item-img img-placeholder">🎬</div>
         <div class="item-info">
           <h4>校园生活Vlog</h4>
@@ -300,7 +300,7 @@
       if (!container) return;
       g.pages.forEach(p => {
         const item = document.createElement('div');
-        item.className = 'gallery-item';
+        item.className = 'gallery-item reveal';
         item.onclick = (e) => openLightbox(g.pages, p, e);
         const img = document.createElement('img');
         img.src = PORTFOLIO_PATH + 'page_' + String(p).padStart(2, '0') + '.jpg';
@@ -317,7 +317,7 @@
     if (peaceContainer) {
       peaceExtra.forEach((src, i) => {
         const item = document.createElement('div');
-        item.className = 'gallery-item';
+        item.className = 'gallery-item reveal';
         item.onclick = (e) => {
           e.stopPropagation();
           document.getElementById('lightbox-img').src = src;
@@ -370,13 +370,98 @@
       if (e.key === 'ArrowRight') navLightbox(1);
     });
 
-    /* ===== Tab 切换 ===== */
+    /* ===== Tab 切换（带动画） ===== */
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.getElementById('tab-' + tabName).classList.add('active');
+
+      const targetTab = document.getElementById('tab-' + tabName);
+      const currentTab = document.querySelector('.tab-content.active');
+
+      if (currentTab === targetTab) return;
+
+      if (currentTab) {
+        currentTab.style.animation = 'fadeOut 0.25s ease forwards';
+        currentTab.addEventListener('animationend', function handler() {
+          currentTab.removeEventListener('animationend', handler);
+          currentTab.classList.remove('active');
+          currentTab.style.animation = '';
+          targetTab.classList.add('active');
+          refreshReveal(targetTab);
+        });
+      } else {
+        targetTab.classList.add('active');
+        refreshReveal(targetTab);
+      }
     }
+
+    function refreshReveal(container) {
+      container.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        if (isInViewport(el)) el.classList.add('visible');
+      });
+    }
+    function isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight - 30;
+    }
+
+    /* ===== 滚动渐现 ===== */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+    function bindReveal() {
+      document.querySelectorAll('.reveal:not(.reveal-bound)').forEach(el => {
+        el.classList.add('reveal-bound');
+        revealObserver.observe(el);
+      });
+    }
+    bindReveal();
+
+    const revealMut = new MutationObserver(() => bindReveal());
+    document.querySelectorAll('.tab-content').forEach(tab => revealMut.observe(tab, { childList: true, subtree: true }));
+
+    /* ===== 数字跳动 ===== */
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target) || 0;
+          if (!target) return;
+          const duration = 1600, start = performance.now();
+          function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+            el.textContent = Math.floor(e * target).toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = target.toLocaleString();
+          }
+          requestAnimationFrame(tick);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat-number').forEach(el => countObserver.observe(el));
+
+    /* ===== 3D 倾斜 ===== */
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rY = (x - 0.5) * 14, rX = (0.5 - y) * 14;
+        card.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateY(-10px) scale(1.02)`;
+        card.style.boxShadow = `${-rY*1.5}px ${rX*1.5}px 40px rgba(180,140,150,0.2), 0 18px 50px rgba(180,140,150,0.18)`;
+        card.style.transition = 'transform 0.1s ease, box-shadow 0.1s ease';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+        card.style.boxShadow = 'var(--shadow-card)';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease';
+      });
+    });
+
+    document.head.insertAdjacentHTML('beforeend','<style>@keyframes fadeOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-12px)}}</style>');
 
     function filterGames(cat, btn) {
       document.querySelectorAll('#game-filters .filter-tag').forEach(t => t.classList.remove('active'));
