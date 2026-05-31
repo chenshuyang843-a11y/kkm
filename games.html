@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小游戏 - 陈舒阳</title>
+  <meta name="description" content="HR老师辛苦啦～来玩局小游戏放松一下！">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">🌸 陈舒阳</a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="about.html">关于我</a></li>
+      <li><a href="experience.html">经历</a></li>
+      <li><a href="portfolio.html">作品集</a></li>
+      <li><a href="life.html">课余生活</a></li>
+      <li><a href="chat.html">AI 聊天</a></li>
+      <li><a href="games.html" class="active">小游戏</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h2>🎮 小游戏</h2>
+    <p class="subtitle">HR老师筛简历辛苦啦～来放松一下吧！</p>
+  </section>
+
+  <div class="games-container">
+
+    <!-- ===== 游戏一：记忆翻牌 ===== -->
+    <div class="game-section">
+      <h3>🃏 记忆翻牌</h3>
+      <p class="game-subtitle">翻转卡片，找到相同的配对。看看你需要多少步？</p>
+
+      <div class="memory-score">
+        步数：<span id="moves">0</span> &nbsp;&nbsp;|&nbsp;&nbsp;
+        配对：<span id="pairs">0</span> / 8
+      </div>
+
+      <div class="memory-board" id="memoryBoard"></div>
+
+      <button class="btn-restart" onclick="initMemory()">🔄 重新开始</button>
+    </div>
+
+    <!-- ===== 游戏二：云·原神 ===== -->
+    <div class="game-section">
+      <h3>☁️ 云·原神</h3>
+      <p class="game-subtitle">无需下载，点击即玩——在浏览器里畅游提瓦特大陆</p>
+
+      <div class="cloud-game-card">
+        <div class="cloud-icon">🌍✨</div>
+        <p class="cloud-desc">
+          官方云游戏平台 · 无需下载 · 低延迟 · 进度同步<br>
+          支持手机/平板/电脑浏览器直接游玩
+        </p>
+        <a href="https://ys.mihoyo.com/cloud/" target="_blank" class="btn-play">
+          ⚡ 点击开始云·原神
+        </a>
+        <p style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">
+          将跳转至原神官方云游戏页面
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 陈舒阳 · 用心记录生活</p>
+  </footer>
+
+  <script>
+    /* ===== 记忆翻牌游戏 ===== */
+    const EMOJIS = ['🌸','🎨','📱','☕','🎮','📚','🏔️','🎵'];
+
+    let cards = [];
+    let flippedCards = [];
+    let matchedCount = 0;
+    let moveCount = 0;
+    let lockBoard = false;
+
+    function initMemory() {
+      // 生成卡牌对
+      cards = [...EMOJIS, ...EMOJIS];
+      // 洗牌
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+
+      flippedCards = [];
+      matchedCount = 0;
+      moveCount = 0;
+      lockBoard = false;
+
+      updateScore();
+      renderBoard();
+    }
+
+    function renderBoard() {
+      const board = document.getElementById('memoryBoard');
+      board.innerHTML = '';
+
+      cards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.index = index;
+        card.onclick = () => flipCard(index, card);
+
+        card.innerHTML = `
+          <div class="card-inner">
+            <div class="card-front">❓</div>
+            <div class="card-back">${emoji}</div>
+          </div>
+        `;
+
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(index, el) {
+      if (lockBoard) return;
+      if (flippedCards.length >= 2) return;
+      if (el.classList.contains('flipped')) return;
+      if (el.classList.contains('matched')) return;
+
+      // 翻开
+      el.classList.add('flipped');
+      flippedCards.push({ index, el });
+
+      if (flippedCards.length === 2) {
+        moveCount++;
+        updateScore();
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      const [a, b] = flippedCards;
+
+      if (cards[a.index] === cards[b.index]) {
+        // 匹配成功
+        a.el.classList.add('matched');
+        b.el.classList.add('matched');
+        matchedCount++;
+        flippedCards = [];
+        updateScore();
+
+        if (matchedCount === 8) {
+          setTimeout(() => {
+            alert('🎉 恭喜通关！你用了 ' + moveCount + ' 步完成了所有配对！\n\n记忆力不错嘛～要不要再来一局？');
+          }, 400);
+        }
+      } else {
+        // 不匹配，翻回去
+        lockBoard = true;
+        setTimeout(() => {
+          a.el.classList.remove('flipped');
+          b.el.classList.remove('flipped');
+          flippedCards = [];
+          lockBoard = false;
+        }, 600);
+      }
+    }
+
+    function updateScore() {
+      document.getElementById('moves').textContent = moveCount;
+      document.getElementById('pairs').textContent = matchedCount;
+    }
+
+    // 初始化
+    initMemory();
+  </script>
+
+</body>
+</html>
